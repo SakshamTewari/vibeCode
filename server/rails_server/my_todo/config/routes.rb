@@ -9,10 +9,14 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   scope "/api" do
-    get "/home", to: "todos#index"
+    get "/todos", to: "todos#index"
     get "todos/:id", to: "todos#show"
     put "/todos/:id", to: "todos#update"
-    post "todos/new", to: "todos#create"
-    delete "todos/:id", to: "todos#destroy"
+    post "/todos", to: "todos#create"
+    delete "/todos/:id", to: "todos#destroy"
+  end
+
+  scope "/api" do
+    resources :comments
   end
 end
