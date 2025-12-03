@@ -11,7 +11,7 @@ function Home(){
     // const [todos, setTodos] = useState("");
 
     const handleAddTodo = async () => {
-         await fetch('http://localhost:3000/todos', {
+         await fetch('http://localhost:3000/api/todos', {
             method: 'POST',
             headers:{'Content-type': 'application/json'},
             body: JSON.stringify({title, description, isCompleted }),
