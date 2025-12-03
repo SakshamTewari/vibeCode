@@ -27,7 +27,7 @@ app.get('/', (req, res)=> {
 })
 
 app.post('/todos', (req,res) => {
-    const {input} = req.body;
+    const {title} = req.body;
     let newId = ++count;
     todos = [...todos, {newId, input}];
     res.json(todos);
