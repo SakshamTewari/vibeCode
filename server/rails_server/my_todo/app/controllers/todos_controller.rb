@@ -21,6 +21,7 @@ class TodosController < ApplicationController
 
     def create
         @todo = Todo.new(todo_params)
+        puts "Here 1##########"
         if @todo.save
             render json: @todo, status: 200
         else
@@ -44,6 +45,8 @@ class TodosController < ApplicationController
       end
 
       def todo_params
-        params.expect(params[:id, :title, :description])
+        #puts "#### 22222222"
+        params.permit(:title, :description, :isCompleted)
+        
       end
 end

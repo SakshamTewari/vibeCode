@@ -11,5 +11,5 @@
 Todo.destroy_all
 
 10.times do |x|
-    Todo.create(id: x+1, title: "Task #{x+1}", completed: [true,false].sample, description: "Todo test description #{x+1}")
+    Todo.create(id: x+1, title: "Task #{x+1}", isCompleted: [true,false].sample, description: "Todo test description #{x+1}")
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_03_163750) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_03_183728) do
   create_table "comments", force: :cascade do |t|
     t.string "message"
     t.string "user_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_163750) do
   create_table "todos", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.boolean "completed"
+    t.boolean "isCompleted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
