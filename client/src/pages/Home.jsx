@@ -15,9 +15,10 @@ function Home(){
        
            const data = await handleLogin();
             const newToken = data.token;
+            console.log(`New Token => ${newToken}`)
             localStorage.setItem('token', newToken);
             setToken(newToken);
-            await fetch('http://localhost:3000/api/todos', {
+            await fetch('http://localhost:3001/api/todos', {
             method: 'POST',
             headers:{'Content-type': 'application/json',  Authorization: `Bearer ${newToken}`},
             body: JSON.stringify({title, description, isCompleted }),
@@ -55,7 +56,7 @@ function Home(){
                 <input type="checkbox" name="completed" id="completed" onChange={() => setIsCompleted(!isCompleted)}/>
             </div>
             <Button style={{ backgroundColor: "gray" }} label={"Add Todo"} onClick={handleAddTodo}></Button>
-            <Button style={{ backgroundColor: "white", text:'black', border:'1px solid black' }} label={"Login"} onClick={handleLogin}/>
+            <Button style={{ backgroundColor: "white", color:'black', border:'3px solid black' }} label={"Login"} onClick={handleLogin}/>
             
         </>
     )
