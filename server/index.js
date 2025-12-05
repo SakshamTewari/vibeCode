@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { verifyToken, generateToken } = require('./jwt');
+require('dotenv').config();
 
 
 const app = express();
@@ -22,14 +24,19 @@ app.listen(PORT, ()=>{
     console.log(`Server running at ${PORT}`);
 })
 
-app.get('/', (req, res)=> {
-    res.json('Welcome to Vibe Code')
+app.get('/login', (req, res)=> {
+    
+    const username = req.params.username;
+    const token = generateToken({username});
+
+    res.json({token});
+    
 })
 
-app.post('/todos', (req,res) => {
-    const {title} = req.body;
-    let newId = ++count;
-    todos = [...todos, {newId, input}];
-    res.json(todos);
-})
+// app.post('/signup', (req,res) => {
+//     // const {input} = req.body;
+//     // let newId = ++count;
+//     // todos = [...todos, {newId, input}];
+//     // res.json(todos);
+// })
 
