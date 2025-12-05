@@ -8,18 +8,35 @@ function Home(){
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [isCompleted, setIsCompleted] = useState(false);
+    const [token, setToken] = useState('');
     // const [todos, setTodos] = useState("");
 
     const handleAddTodo = async () => {
-         await fetch('http://localhost:3000/api/todos', {
+       
+           const data = await handleLogin();
+            const newToken = data.token;
+            localStorage.setItem('token', newToken);
+            setToken(newToken);
+            await fetch('http://localhost:3000/api/todos', {
             method: 'POST',
-            headers:{'Content-type': 'application/json'},
+            headers:{'Content-type': 'application/json',  Authorization: `Bearer ${newToken}`},
             body: JSON.stringify({title, description, isCompleted }),
         });
-        // const data = await res.json();
-        // console.log(data);
-        // console.log({title, description, isCompleted })
        
+       
+    }
+
+    const handleLogin = async () => {
+        try{
+        console.log("handleLogin called");
+        const res = await fetch('http://localhost:3000/login');
+        const data = await res.json();
+        console.log("data:",data);
+        return data;
+        }
+        catch(err) {
+            console.log(err);
+        }
     }
 
     return(
@@ -38,6 +55,7 @@ function Home(){
                 <input type="checkbox" name="completed" id="completed" onChange={() => setIsCompleted(!isCompleted)}/>
             </div>
             <Button style={{ backgroundColor: "gray" }} label={"Add Todo"} onClick={handleAddTodo}></Button>
+            <Button style={{ backgroundColor: "white", text:'black', border:'1px solid black' }} label={"Login"} onClick={handleLogin}/>
             
         </>
     )
