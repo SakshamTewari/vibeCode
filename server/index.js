@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { verifyToken, generateToken } = require('./jwt');
+const redis = require('./config/redis');
 require('dotenv').config();
 
 
@@ -11,23 +12,21 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const PORT = 3000;
-let count = 1;
-let todos = [{
-    id: count,
-    name: 'First Todo', 
-}];
-
-
 
 
 app.listen(PORT, ()=>{
     console.log(`Server running at ${PORT}`);
 })
 
-app.get('/login', (req, res)=> {
+app.post('/login', async (req, res)=> {
     
-    const username = req.params.username;
+    const {username} = req.body;
+    
+    // Generate token
     const token = generateToken({username});
+
+    // Store session in redis
+    await redis.set(`session:${token}`, JSON.stringify({createdAt: Date.now()}), 'EX', 3600);
 
     res.json({token});
     
