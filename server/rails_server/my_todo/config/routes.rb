@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   scope "/api" do
     resources :comments
   end
+
+  post "login", to: "authentication#login"
+  post "signup", to: "authentication#signup"
+  
 end

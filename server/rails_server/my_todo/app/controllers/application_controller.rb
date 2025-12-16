@@ -15,6 +15,7 @@ class ApplicationController < ActionController::API
            end
 
            payload, header = JWT.decode(token,Rails.application.credentials.jwt_secret, true, {"algorithm" => "HS256"})
+           @current_user = User.find_by(email: payload["user_email"])
            if payload["exp"] < Time.now().to_i
             raise "Token has expired"
            end

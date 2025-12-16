@@ -3,7 +3,7 @@ class TodosController < ApplicationController
     before_action :set_todo, only: %i[show update destroy]
     
     def index
-        todos = Todo.all
+        todos = Todo.for_user(current_user).order(created_at: :desc)
         render json: todos
     end
 
@@ -38,7 +38,7 @@ class TodosController < ApplicationController
       
       def set_todo
         begin
-          @todo = Todo.find(params.expect(:id))
+          @todo = Todo.for_user(current_user).find(params.expect(:id))
         rescue => e
           render json: e.message, status: :not_found
         end
