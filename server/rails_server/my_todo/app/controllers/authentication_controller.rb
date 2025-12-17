@@ -7,6 +7,7 @@ class AuthenticationController < ApplicationController
         if user.save
             token = JsonWebToken.encode({user_email: user.email})
             render json: {token: token, user_email: user.email}
+            UserMailer.with(user: user).welcome_email.deliver_later
         else
             render json: { error: user.errors.full_messages}, status: :unprocessable_entity
         end    
@@ -25,6 +26,6 @@ class AuthenticationController < ApplicationController
     private
 
     def user_params
-        params.permit(:email,:user_type,:password, :password_confirmation)
+        params.permit(:email, :name, :user_type,:password, :password_confirmation)
     end
 end
